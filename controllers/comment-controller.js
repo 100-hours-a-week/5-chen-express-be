@@ -4,10 +4,13 @@ const CommentModel = require("../models/comment-model")
 
 
 module.exports = new class {
-    list(req, res) {
-        res.json({
-            comments: CommentModel.all()
-        })
+    list = {
+        validator: [],
+        controller: (req, res) => {
+            res.json({
+                comments: CommentModel.all()
+            })
+        }
     }
 
     write = {

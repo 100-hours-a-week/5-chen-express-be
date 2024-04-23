@@ -93,4 +93,48 @@ module.exports = new class {
             });
         }
     }
+    me = {
+        validator: [],
+        controller: (req, res) => {
+            const dummyId = 1
+            const user = UserModel.find(dummyId);
+            res.json({
+                "user": user
+            })
+        }
+    };
+
+    update = {
+        validator: [
+            body("nickname").trim(),
+            body("password").trim(),
+        ],
+        controller: (req, res) => {
+            const dummyId = 1
+            const {nickname, password} = req.body
+
+
+            for (const user of UserModel.all()) {
+                if (user.nickname === nickname) {
+                    const terminateByDuplicated = resp => {
+                        resp.status(HttpStatus.BAD_REQUEST);
+                        resp.json({
+                            "msg": "DUPLICATED"
+                        });
+                    };
+                    terminateByDuplicated(res);
+                    return;
+                }
+            }
+
+            const user = UserModel.find(dummyId);
+            user.update(user.email, password, nickname)
+            user.save()
+
+            res.json({
+                "msg": "successful update",
+                "user": user
+            })
+        }
+    };
 }

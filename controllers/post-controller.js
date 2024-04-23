@@ -1,13 +1,30 @@
 const HttpStatus = require("http-status-codes");
 const {body, param} = require("express-validator");
 const PostModel = require("../models/post-model");
+const CommentModel = require("../models/comment-model");
+const {trim} = require("validator");
 
 
 module.exports = new class {
-    list(req, res) {
-        res.json({
-            posts: PostModel.all()
-        })
+    comments = {
+        validator: [param("id").trim().isNumeric()],
+        controller: (req, res) => {
+            const id = req.params.id;
+            const post = PostModel.find(id);
+            res.json({
+                post: post,
+                comments: CommentModel.all()
+            })
+        }
+    }
+
+    list = {
+        validator: [],
+        controller: (req, res) => {
+            res.json({
+                posts: PostModel.all()
+            })
+        }
     }
 
     detail = {
@@ -18,7 +35,9 @@ module.exports = new class {
             const id = req.params.id;
             const post = PostModel.find(id);
 
-            res.json(post)
+            res.json({
+                "post": post,
+            })
         }
     }
 

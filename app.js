@@ -9,6 +9,7 @@ const fs = require('fs');
 const indexRouter = require('./routes/index-route');
 const usersRouter = require('./routes/user-route');
 const postsRouter = require('./routes/post-route');
+const commentsRouter = require('./routes/comment-route');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 
 global.jsonPath = (...paths) => {
     const p = ["json"].concat(paths);

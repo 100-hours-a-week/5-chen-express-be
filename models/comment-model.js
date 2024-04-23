@@ -36,7 +36,7 @@ module.exports = class {
 
             _json_data.comments.push(
                 {
-                    "id": this.id,
+                    "id": nextId,
                     "author": {
                         "nickname": "AppleFan",
                         "profile_image": "/images/igu.jpg"
