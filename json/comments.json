@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "id": 1,
+      "author": {
+        "nickname": "AppleFan",
+        "profile_image": "/images/igu.jpg"
+      },
+      "created_at": "2024-04-17T07:30:54.696Z",
+      "content": "스티븐 잡스는 혁신적인 기업가로서 우리에게 많은 영감을 주었습니다."
+    },
+    {
+      "id": 2,
+      "author": {
+        "nickname": "TechEnthusiast",
+        "profile_image": "/images/parrot.jpg"
+      },
+      "created_at": "2024-04-17T07:32:21.123Z",
+      "content": "그의 열정과 비전은 기술 산업에 새로운 가능성을 보여주었습니다."
+    },
+    {
+      "id": 3,
+      "author": {
+        "nickname": "InnovationFanatic",
+        "profile_image": "/images/jobs.jpeg"
+      },
+      "created_at": "2024-04-17T07:35:45.987Z",
+      "content": "스티븐 잡스의 생애는 현대 기술 산업의 역사에 길이 남을 것입니다."
+    },
+    {
+      "id": 4,
+      "author": {
+        "nickname": "AppleLover",
+        "profile_image": "/images/sheep.jpg"
+      },
+      "created_at": "2024-04-17T07:40:02.345Z",
+      "content": "그의 성공 이야기는 우리에게 동기부여를 줍니다."
+    },
+    {
+      "id": 5,
+      "author": {
+        "nickname": "GadgetGuru",
+        "profile_image": "/images/crab.jpg"
+      },
+      "created_at": "2024-04-17T07:45:12.789Z",
+      "content": "스티븐 잡스의 창의적인 접근은 기술 산업을 변화시켰습니다."
+    },
+    {
+      "id": 6,
+      "author": {
+        "nickname": "AppleForever",
+        "profile_image": "/images/cat.jpg"
+      },
+      "created_at": "2024-04-17T07:50:34.567Z",
+      "content": "애플 제품은 항상 사용자를 위해 고안되었습니다."
+    },
+    {
+      "id": 7,
+      "author": {
+        "nickname": "MacFanatic",
+        "profile_image": "/images/parrot.jpg"
+      },
+      "created_at": "2024-04-17T07:55:46.321Z",
+      "content": "맥킨토시는 컴퓨터 업계를 혁신적으로 변화시켰습니다."
+    },
+    {
+      "id": 8,
+      "author": {
+        "nickname": "DesignEnthusiast",
+        "profile_image": "/images/eagle.jpg"
+      },
+      "created_at": "2024-04-17T08:00:59.876Z",
+      "content": "애플 제품의 디자인은 세련되고 사용하기 편리합니다."
+    }
+  ]
+}

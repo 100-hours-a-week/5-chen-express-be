@@ -27,24 +27,21 @@ module.exports = class {
         return new this(null, title, content, image)
     }
 
+    static all() {
+        return this._loadJSON().posts;
+    }
+
     static find(id) {
         const _json_data = this._loadJSON()
+        const idx = findIndex(_json_data.posts, id)
+        const target = _json_data.posts[idx];
 
-        let targetPost;
-
-        for (const post of _json_data.posts) {
-            if (post.id === id) {
-                targetPost = post
-                break;
-            }
-        }
-
-        return new this(id, targetPost.title, targetPost.content, targetPost.image,
-            targetPost.like_count, targetPost.comment_count, targetPost.view_count);
+        return new this(id, target.title, target.content, target.image,
+            target.like_count, target.comment_count, target.view_count);
     }
 
     save() {
-        const _json_data = jsonParse("posts.json")
+        const _json_data = this.constructor._loadJSON()
         if (this.id == null) {
             const nextId = findNextId(_json_data.posts)
 
@@ -67,14 +64,15 @@ module.exports = class {
         } else {
             let idx = findIndex(_json_data.posts, this.id)
 
-            _json_data.posts[idx].title = title;
-            _json_data.posts[idx].content = content;
-            _json_data.posts[idx].image = image;
-            _json_data.posts[idx].like_count = like_count;
-            _json_data.posts[idx].comment_count = comment_count;
-            _json_data.posts[idx].view_count = view_count;
+            _json_data.posts[idx].title = this.title;
+            _json_data.posts[idx].content = this.content;
+            _json_data.posts[idx].image = this.image;
+            _json_data.posts[idx].like_count = this.like_count;
+            _json_data.posts[idx].comment_count = this.comment_count;
+            _json_data.posts[idx].view_count = this.view_count;
 
         }
+
         jsonWrite("posts.json", _json_data)
     }
 
