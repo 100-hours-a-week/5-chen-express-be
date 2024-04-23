@@ -1,9 +1,6 @@
 const HttpStatus = require("http-status-codes");
 const {body, param} = require("express-validator");
 const UserModel = require("../models/user-model");
-const fs = require("fs");
-const e = require("express");
-
 
 module.exports = new class {
     exist = {
@@ -12,7 +9,7 @@ module.exports = new class {
             body("nickname").trim()
         ],
         controller: (req, res) => {
-            const {nickname, email} = req.body
+            const {nickname, email} = req.body;
 
             let emailCheck = false;
             let nicknameCheck = false;
@@ -30,7 +27,7 @@ module.exports = new class {
                 "msg": "OK",
                 "email-exist": emailCheck,
                 "nickname-exist": nicknameCheck,
-            })
+            });
         }
     }
 
@@ -42,7 +39,7 @@ module.exports = new class {
         controller: (req, res) => {
             const {email, password} = req.body;
 
-            for (user of UserModel.all()) {
+            for (const user of UserModel.all()) {
                 if (user.email === email && user.password === password) {
                     res.json({
                         "msg": "login success"
@@ -56,7 +53,7 @@ module.exports = new class {
                 "msg": "login failed"
             });
         }
-    }
+    };
 
     signup = {
         validator: [
@@ -86,21 +83,22 @@ module.exports = new class {
             }
 
             const newUser = UserModel.create(email, password, nickname);
-            newUser.save()
+            newUser.save();
 
             res.json({
                 "msg": "OK"
             });
         }
-    }
+    };
+
     me = {
         validator: [],
         controller: (req, res) => {
-            const dummyId = 1
+            const dummyId = 1;
             const user = UserModel.find(dummyId);
             res.json({
                 "user": user
-            })
+            });
         }
     };
 
@@ -110,8 +108,8 @@ module.exports = new class {
             body("password").trim(),
         ],
         controller: (req, res) => {
-            const dummyId = 1
-            const {nickname, password} = req.body
+            const dummyId = 1;
+            const {nickname, password} = req.body;
 
 
             for (const user of UserModel.all()) {
@@ -128,13 +126,13 @@ module.exports = new class {
             }
 
             const user = UserModel.find(dummyId);
-            user.update(user.email, password, nickname)
-            user.save()
+            user.update(user.email, password, nickname);
+            user.save();
 
             res.json({
                 "msg": "successful update",
                 "user": user
-            })
+            });
         }
     };
 }

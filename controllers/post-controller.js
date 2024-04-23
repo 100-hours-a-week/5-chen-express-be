@@ -2,7 +2,6 @@ const HttpStatus = require("http-status-codes");
 const {body, param} = require("express-validator");
 const PostModel = require("../models/post-model");
 const CommentModel = require("../models/comment-model");
-const {trim} = require("validator");
 
 
 module.exports = new class {
@@ -14,7 +13,7 @@ module.exports = new class {
             res.json({
                 post: post,
                 comments: CommentModel.all()
-            })
+            });
         }
     }
 
@@ -23,7 +22,7 @@ module.exports = new class {
         controller: (req, res) => {
             res.json({
                 posts: PostModel.all()
-            })
+            });
         }
     }
 
@@ -37,7 +36,7 @@ module.exports = new class {
 
             res.json({
                 "post": post,
-            })
+            });
         }
     }
 
@@ -52,7 +51,7 @@ module.exports = new class {
 
             const post = PostModel.create(title, content, image);
 
-            post.save()
+            post.save();
 
             res.status(HttpStatus.CREATED);
 
@@ -71,12 +70,12 @@ module.exports = new class {
             body('image').trim(),
         ],
         controller: (req, res) => {
-            const id = req.params.id
+            const id = req.params.id;
             const {title, content, image} = req.body;
 
             const post = PostModel.find(id);
-            post.update(title, content, image)
-            post.save()
+            post.update(title, content, image);
+            post.save();
 
             res.json({"msg": "ok"});
         }
