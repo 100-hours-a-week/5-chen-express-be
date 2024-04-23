@@ -6,9 +6,9 @@ const logger = require('morgan');
 
 const fs = require('fs');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var postsRouter = require('./routes/posts');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -30,6 +30,10 @@ global.jsonPath = (...paths) => {
     const p = ["json"].concat(paths);
     return path.resolve(...p);
 };
+
+global.jsonWrite = (path, data) => {
+    fs.writeFileSync(jsonPath(path), JSON.stringify(data), 'utf8');
+}
 
 global.jsonParse = (...paths) => {
     return JSON.parse(fs.readFileSync(jsonPath(...paths), 'utf8'))
