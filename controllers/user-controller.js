@@ -1,15 +1,15 @@
 const HttpStatus = require("http-status-codes");
-const {body, param} = require("express-validator");
+const {body, param, query} = require("express-validator");
 const UserModel = require("../models/user-model");
 
 module.exports = new class {
     exist = {
         validator: [
-            body("email").trim(),
-            body("nickname").trim()
+            query("email").trim(),
+            query("nickname").trim()
         ],
         controller: (req, res) => {
-            const {nickname, email} = req.body;
+            const {nickname, email} = req.query;
 
             let emailCheck = false;
             let nicknameCheck = false;
@@ -25,8 +25,8 @@ module.exports = new class {
 
             res.json({
                 "msg": "OK",
-                "email-exist": emailCheck,
-                "nickname-exist": nicknameCheck,
+                "email_exist": emailCheck,
+                "nickname_exist": nicknameCheck,
             });
         }
     }
@@ -57,11 +57,13 @@ module.exports = new class {
 
     signup = {
         validator: [
-            body('email').trim(),
-            body('password').trim(),
-            body('nickname').trim()
+            body('email').trim().notEmpty(),
+            body('password').trim().notEmpty(),
+            body('nickname').trim().notEmpty(),
         ],
         controller: (req, res) => {
+            console.log(req.body)
+            console.log(req.file)
             const {email, password, nickname} = req.body;
 
             const terminateByDuplicated = resp => {
@@ -81,8 +83,11 @@ module.exports = new class {
                     return;
                 }
             }
-
-            const newUser = UserModel.create(email, password, nickname);
+            let filePath = "http://localhost:8080/public/images/default.jpg"
+            if (req.file != null) {
+                filePath = `http://localhost:8080/uploads/${req.file.filename}`;
+            }
+            const newUser = UserModel.create(email, password, nickname, filePath);
             newUser.save();
 
             res.json({

@@ -32,6 +32,16 @@ app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 
+try {
+    fs.readdirSync('uploads'); // 폴더 확인
+} catch (err) {
+    console.error('uploads 폴더가 없습니다. 폴더를 생성합니다.');
+    fs.mkdirSync('uploads'); // 폴더 생성
+}
+
+app.use('/public', express.static('public'))
+app.use('/uploads', express.static('uploads'))
+
 global.jsonPath = (...paths) => {
     const p = ["json"].concat(paths);
     return path.resolve(...p);
@@ -50,6 +60,7 @@ app.use(function (req, res, next) {
     next(createError(404));
 });
 
+
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
@@ -58,7 +69,10 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.json({
+        "message": err.message,
+        "error": req.app.get('env') === 'development' ? err : {}
+    })
 });
 
 module.exports = app;

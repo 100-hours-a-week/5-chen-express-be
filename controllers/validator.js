@@ -8,7 +8,7 @@ const validate = (req, res, next) => {
     }
     const extractedErrors = []
     for (const err of errors.array()) {
-        extractedErrors.push({[err.param]: err.msg})
+        extractedErrors.push({[err.path]: err.msg})
     }
 
     return res.status(422).json({

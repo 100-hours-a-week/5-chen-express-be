@@ -5,21 +5,24 @@ module.exports = class {
     email = null;
     password = null;
     nickname = null;
+    profile_image = null;
 
 
-    constructor(id, email, password, nickname) {
+    constructor(id, email, password, nickname, profile_image) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.profile_image = profile_image;
     }
 
     static _loadJSON() {
         return jsonParse("users.json")
     }
 
-    static create(email, password, nickname) {
-        return new this(null, email, password, nickname)
+    static create(email, password, nickname, profile_image) {
+
+        return new this(null, email, password, nickname, profile_image)
     }
 
     static find(id) {
@@ -29,7 +32,7 @@ module.exports = class {
 
         const target = _json_data.users[idx];
 
-        return new this(id, target.email, target.password, target.nickname);
+        return new this(id, target.email, target.password, target.nickname, target.profile_image);
     }
 
     static all() {
@@ -47,6 +50,7 @@ module.exports = class {
                     "email": this.email,
                     "password": this.password,
                     "nickname": this.nickname,
+                    "profile_image": this.profile_image,
                 }
             );
         } else {
@@ -55,9 +59,10 @@ module.exports = class {
             _json_data.users[idx].email = this.email;
             _json_data.users[idx].password = this.password;
             _json_data.users[idx].nickname = this.nickname;
+            _json_data.users[idx].profile_image = this.profile_image;
 
         }
-        jsonWrite("posts.json", _json_data)
+        jsonWrite("users.json", _json_data)
     }
 
     update(email, password, nickname) {

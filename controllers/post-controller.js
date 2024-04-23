@@ -44,12 +44,10 @@ module.exports = new class {
         validator: [
             body('title').trim().notEmpty(),
             body('content').trim().notEmpty(),
-            body('image').trim(),
         ],
         controller: (req, res) => {
-            const {title, content, image} = req.body;
-
-            const post = PostModel.create(title, content, image);
+            const {title, content} = req.body;
+            const post = PostModel.create(title, content, req.file);
 
             post.save();
 
@@ -67,14 +65,13 @@ module.exports = new class {
             param("id").trim().isNumeric(),
             body('title').trim().notEmpty(),
             body('content').trim().notEmpty(),
-            body('image').trim(),
         ],
         controller: (req, res) => {
             const id = req.params.id;
-            const {title, content, image} = req.body;
+            const {title, content} = req.body;
 
             const post = PostModel.find(id);
-            post.update(title, content, image);
+            post.update(title, content, req.file);
             post.save();
 
             res.json({"msg": "ok"});
