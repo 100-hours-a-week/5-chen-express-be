@@ -5,8 +5,9 @@ const PostModel = require("../models/post-model");
 
 module.exports = new class {
     list(req, res) {
-        const postData = jsonParse("posts.json");
-        res.json(postData)
+        res.json({
+            posts: PostModel.all()
+        })
     }
 
     detail = {
