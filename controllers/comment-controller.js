@@ -15,17 +15,20 @@ module.exports = new class {
 
     write = {
         validator: [
+            body("post_id").trim().isNumeric(),
             body('content').trim().notEmpty()
         ],
         controller: (req, res) => {
-            const {content} = req.body;
+            const {content, post_id} = req.body;
+            console.log(`POST ID :${post_id}`)
 
             const comment = CommentModel.create(content);
             comment.save()
 
             res.status(HttpStatus.CREATED);
             res.json({
-                "msg": "created"
+                "msg": "created",
+                "comment": comment,
             });
         }
 
