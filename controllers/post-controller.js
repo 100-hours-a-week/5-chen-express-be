@@ -30,13 +30,13 @@ module.exports = new class {
         ],
         controller: (req, res) => {
             const {title, content, image} = req.body;
-            console.log("#")
+
             const post = PostModel.create(title, content, image);
-            console.log("#")
+
             post.save()
-            console.log("#")
+
             res.status(HttpStatus.CREATED);
-            console.log("#")
+
             res.json({
                 "msg": "created"
             });
