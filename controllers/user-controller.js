@@ -1,6 +1,6 @@
 const HttpStatus = require("http-status-codes");
 const {body, param} = require("express-validator");
-const UserModel = require("../models/user");
+const UserModel = require("../models/user-model");
 
 
 module.exports = new class {
