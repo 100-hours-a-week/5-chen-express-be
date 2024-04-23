@@ -1,5 +1,5 @@
 const express = require('express');
-const posts = require("../controllers/posts");
+const posts = require("../controllers/post-controller");
 const {validate} = require("../controllers/validator")
 
 const router = express.Router();
