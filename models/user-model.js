@@ -36,10 +36,6 @@ module.exports = class {
         return this._loadJSON().users;
     }
 
-    real_password() {
-        console.log(this.password);
-    }
-
     save() {
         const _json_data = this.constructor._loadJSON()
         if (this.id == null) {
