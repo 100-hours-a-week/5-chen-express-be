@@ -3,6 +3,8 @@ const {body, param, query} = require("express-validator");
 const UserModel = require("../models/user-model");
 
 module.exports = new class {
+    DUMMY_ID = 1;
+
     exist = {
         validator: [
             query("email").trim(),
@@ -99,8 +101,7 @@ module.exports = new class {
     me = {
         validator: [],
         controller: (req, res) => {
-            const dummyId = 1;
-            const user = UserModel.find(dummyId);
+            const user = UserModel.find(this.DUMMY_ID);
             res.json({
                 "user": user
             });
@@ -110,28 +111,33 @@ module.exports = new class {
     update = {
         validator: [
             body("nickname").trim(),
-            body("password").trim(),
         ],
         controller: (req, res) => {
-            const dummyId = 1;
-            const {nickname, password} = req.body;
+            const user = UserModel.find(this.DUMMY_ID);
+            let {nickname} = req.body;
 
-
-            for (const user of UserModel.all()) {
-                if (user.nickname === nickname) {
-                    const terminateByDuplicated = resp => {
-                        resp.status(HttpStatus.BAD_REQUEST);
-                        resp.json({
-                            "msg": "DUPLICATED"
-                        });
-                    };
-                    terminateByDuplicated(res);
-                    return;
+            if (nickname !== "") {
+                for (const user of UserModel.all()) {
+                    if (user.nickname === nickname && user.id != this.DUMMY_ID) {
+                        const terminateByDuplicated = resp => {
+                            resp.status(HttpStatus.BAD_REQUEST);
+                            resp.json({
+                                "msg": "DUPLICATED"
+                            });
+                        };
+                        terminateByDuplicated(res);
+                        return;
+                    }
                 }
+            } else {
+                nickname = user.nickname;
             }
 
-            const user = UserModel.find(dummyId);
-            user.update(user.email, password, nickname);
+            let filePath = user.profile_image
+            if (req.file != null) {
+                filePath = `http://localhost:8080/uploads/${req.file.filename}`;
+            }
+            user.update(user.email, user.password, nickname, filePath);
             user.save();
 
             res.json({
@@ -140,4 +146,21 @@ module.exports = new class {
             });
         }
     };
+    password = {
+        validator: [
+            body("password").trim().notEmpty(),
+        ],
+        controller: (req, res) => {
+            const user = UserModel.find(this.DUMMY_ID);
+            let {password} = req.body;
+
+            user.update(user.email, password, user.nickname, user.profile_image);
+            user.save();
+
+            res.json({
+                "msg": "successful update",
+                "user": user
+            });
+        }
+    }
 }

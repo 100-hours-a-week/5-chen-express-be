@@ -8,7 +8,7 @@ module.exports = new class {
         validator: [],
         controller: (req, res) => {
             res.json({
-                "comments": CommentModel.all()
+                "comments": CommentModel.all().sort((a, b) => b.id - a.id)
             })
         }
     }

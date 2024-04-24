@@ -12,7 +12,7 @@ module.exports = new class {
             const post = PostModel.find(id);
             res.json({
                 post: post,
-                comments: CommentModel.all()
+                comments: CommentModel.all().sort((a, b) => b.id - a.id)
             });
         }
     }
@@ -54,7 +54,8 @@ module.exports = new class {
             res.status(HttpStatus.CREATED);
 
             res.json({
-                "msg": "created"
+                "msg": "created",
+                post: post
             });
         }
 

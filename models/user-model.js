@@ -65,9 +65,11 @@ module.exports = class {
         jsonWrite("users.json", _json_data)
     }
 
-    update(email, password, nickname) {
+    update(email, password, nickname, filePath) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.profile_image = filePath
+
     }
 }

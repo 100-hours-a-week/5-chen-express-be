@@ -75,6 +75,7 @@ module.exports = class {
                     "author": this.author,
                 }
             );
+            this.id = nextId;
         } else {
             let idx = findIndex(_json_data.posts, this.id)
 
@@ -92,8 +93,8 @@ module.exports = class {
     }
 
     update(title, content, file) {
-        let filename = "default.jpg";
-        let filePath = "http://localhost:8080/public/images/default.jpg";
+        let filename = this.image.name
+        let filePath = this.image.path
 
         if (file != null) {
             filename = file.originalname;
