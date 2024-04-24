@@ -58,7 +58,23 @@ module.exports = new class {
                 post: post
             });
         }
+    }
 
+    delete = {
+        validator: [
+            param("id").trim().isNumeric()
+        ],
+        controller: (req, res) => {
+            const id = req.params.id;
+            const post = PostModel.find(id);
+
+            post.delete();
+
+            res.json({
+                msg: "deleted",
+                post: post
+            })
+        }
     }
 
     update = {

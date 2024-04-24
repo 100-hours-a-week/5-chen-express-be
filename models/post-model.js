@@ -105,4 +105,12 @@ module.exports = class {
         this.content = content;
         this.image = {name: filename, path: filePath};
     }
+
+    delete() {
+        const _json_data = this.constructor._loadJSON()
+        let idx = findIndex(_json_data.posts, this.id)
+        _json_data.posts.splice(idx, 1)
+
+        jsonWrite("posts.json", _json_data)
+    }
 }

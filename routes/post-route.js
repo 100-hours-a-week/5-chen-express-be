@@ -13,6 +13,8 @@ router.get('/:id', posts.detail.validator, validate, posts.detail.controller)
 
 router.post('/:id', upload.single("file"), posts.update.validator, validate, posts.update.controller)
 
+router.delete('/:id', posts.delete.validator, validate, posts.delete.controller)
+
 router.get('/:id/comments', posts.comments.validator, validate, posts.comments.controller)
 
 module.exports = router;
