@@ -47,7 +47,10 @@ module.exports = new class {
             comment.update(content)
             comment.save()
 
-            res.json({"msg": "ok"});
+            res.json({
+                "msg": "ok",
+                comment: comment
+            });
         }
 
     }
