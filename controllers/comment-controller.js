@@ -51,4 +51,17 @@ module.exports = new class {
         }
 
     }
+    delete = {
+        validator: [param("id").trim().isNumeric()],
+        controller: (req, res) => {
+            const id = req.params.id
+
+            const comment = CommentModel.find(id);
+            comment.delete();
+
+            res.json({
+                msg: "ok",
+            })
+        }
+    };
 }

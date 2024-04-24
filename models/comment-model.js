@@ -57,4 +57,12 @@ module.exports = class {
     update(content) {
         this.content = content;
     }
+
+    delete() {
+        const _json_data = this.constructor._loadJSON()
+        let idx = findIndex(_json_data.comments, this.id)
+        _json_data.comments.splice(idx, 1)
+
+        jsonWrite("comments.json", _json_data)
+    }
 }
