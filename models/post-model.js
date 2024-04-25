@@ -1,12 +1,12 @@
 const {findIndex, findNextId} = require("./utils");
-
+const SERVER = "http://localhost:8080";
 module.exports = class {
     id = null;
     title = null;
     content = null;
     image = {
         "name": "default.jpg",
-        "path": "http://localhost:8080/public/images/default.jpg"
+        "path": `${SERVER}/public/images/default.jpg`
     };
     like_count = 0;
     comment_count = 0;
@@ -14,7 +14,7 @@ module.exports = class {
     created_at = null;
     author = {
         "nickname": "DEFAULT",
-        "profile_image": "http://localhost:8080/public/images/default.jpg"
+        "profile_image": `${SERVER}/public/images/default.jpg`
     };
 
     constructor(id, title, content, image, created_at, like_count = 0, comment_count = 0, view_count = 0) {
@@ -34,11 +34,11 @@ module.exports = class {
 
     static create(title, content, file) {
         let filename = "default.jpg";
-        let filePath = "http://localhost:8080/public/images/default.jpg";
+        let filePath = `${SERVER}/public/images/default.jpg`
 
         if (file != null) {
             filename = file.originalname;
-            filePath = `http://localhost:8080/uploads/${file.filename}`;
+            filePath = `${SERVER}/uploads/${file.filename}`;
         }
 
         return new this(null, title, content, {name: filename, path: filePath}, new Date().toISOString())
@@ -98,7 +98,7 @@ module.exports = class {
 
         if (file != null) {
             filename = file.originalname;
-            filePath = `http://localhost:8080/uploads/${file.filename}`;
+            filePath = `${SERVER}/uploads/${file.filename}`;
         }
 
         this.title = title;

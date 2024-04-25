@@ -2,6 +2,8 @@ const HttpStatus = require("http-status-codes");
 const {body, param, query} = require("express-validator");
 const UserModel = require("../models/user-model");
 
+const SERVER = "http://localhost:8080";
+
 module.exports = new class {
     DUMMY_ID = 1;
 
@@ -85,9 +87,9 @@ module.exports = new class {
                     return;
                 }
             }
-            let filePath = "http://localhost:8080/public/images/default.jpg"
+            let filePath = `${SERVER}/public/images/default.jpg`;
             if (req.file != null) {
-                filePath = `http://localhost:8080/uploads/${req.file.filename}`;
+                filePath = `${SERVER}/uploads/${req.file.filename}`;
             }
             const newUser = UserModel.create(email, password, nickname, filePath);
             newUser.save();
@@ -144,7 +146,7 @@ module.exports = new class {
 
             let filePath = user.profile_image
             if (req.file != null) {
-                filePath = `http://localhost:8080/uploads/${req.file.filename}`;
+                filePath = `${SERVER}/uploads/${req.file.filename}`;
             }
 
             user.update(user.email, user.password, nickname, filePath);
