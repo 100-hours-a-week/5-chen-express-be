@@ -1,5 +1,5 @@
 const {findIndex, findNextId} = require("./utils");
-const SERVER = "http://ec2-3-36-69-113.ap-northeast-2.compute.amazonaws.com:8080/";
+const SERVER = "http://ec2-3-36-69-113.ap-northeast-2.compute.amazonaws.com:8080";
 module.exports = class {
     id = null;
     title = null;
