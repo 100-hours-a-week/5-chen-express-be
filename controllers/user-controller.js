@@ -113,12 +113,21 @@ module.exports = new class {
             body("nickname").trim(),
         ],
         controller: (req, res) => {
-            const user = UserModel.find(this.DUMMY_ID);
+            const userId = this.DUMMY_ID;
+            const user = UserModel.find(userId);
             let {nickname} = req.body;
+
+            if (nickname === "" && req.file == null) {
+                res.status(HttpStatus.BAD_REQUEST)
+                res.json({
+                    "msg": "Null Body"
+                })
+                return;
+            }
 
             if (nickname !== "") {
                 for (const user of UserModel.all()) {
-                    if (user.nickname === nickname && user.id != this.DUMMY_ID) {
+                    if (user.nickname === nickname && user.id != userId) {
                         const terminateByDuplicated = resp => {
                             resp.status(HttpStatus.BAD_REQUEST);
                             resp.json({
@@ -137,6 +146,7 @@ module.exports = new class {
             if (req.file != null) {
                 filePath = `http://localhost:8080/uploads/${req.file.filename}`;
             }
+
             user.update(user.email, user.password, nickname, filePath);
             user.save();
 
