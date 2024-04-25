@@ -1,1 +1,242 @@
-{"posts":[{"id":1,"title":"어제 늦게까지 일했더니 오늘 피곤해요","content":"content","like_count":111,"comment_count":222,"view_count":333,"created_at":"2024-04-17T07:30:54.696Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"JohnDoe1985","profile_image":"/images/snake.jpg"}},{"id":2,"title":"최근에 새로운 취미를 찾아보려고 하는데 추천 좀 해주세요","content":"content","like_count":1111,"comment_count":2222,"view_count":3333,"created_at":"2024-04-10T07:30:54.696Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"ArtLover123","profile_image":"/images/cat.jpg"}},{"id":3,"title":"titlettltletl","content":"contentcotntocontent","like_count":500,"comment_count":1000,"view_count":1500,"created_at":"2024-04-15T08:45:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"CodeNinja2024","profile_image":"/images/igu.jpg"}},{"id":4,"title":"titlettltletl","content":"contentcotntocontent","like_count":300,"comment_count":600,"view_count":900,"created_at":"2024-04-12T09:15:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"FitnessGuru87","profile_image":"/images/jellyfish.jpg"}},{"id":5,"title":"요즘 빈티지 패션 트렌드가 유행인 이유","content":"content","like_count":700,"comment_count":1400,"view_count":2100,"created_at":"2024-04-09T10:30:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"VintageFashionista","profile_image":"/images/cow.jpg"}},{"id":6,"title":"가족과 함께하는 홈시네마를 즐기는 방법","content":"content","like_count":900,"comment_count":1800,"view_count":2700,"created_at":"2024-04-05T11:45:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"MovieBuffFamily","profile_image":"/images/parrot.jpg"}},{"id":7,"title":"오늘은 무슨 요리를 해볼까요?","content":"content","like_count":200,"comment_count":400,"view_count":600,"created_at":"2024-04-03T12:00:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"ChefInTheMaking","profile_image":"/images/waterdog.jpg"}},{"id":8,"title":"독서의 매력과 효과에 대한 이야기","content":"content","like_count":600,"comment_count":1200,"view_count":1800,"created_at":"2024-04-01T13:15:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"BookwormLife","profile_image":"/images/profile-image.jpeg"}},{"id":9,"title":"시간 관리의 중요성과 팁들","content":"content","like_count":400,"comment_count":800,"view_count":1200,"created_at":"2024-03-29T14:30:00.000Z","image":{"name":"áá³ááµáá©á«áá©ááµá¼ ááµáá§á«0(áá³á¯áá¥).png","path":"http://localhost:8080/uploads/1713923554419áá³ááµáá©á«áá©ááµá¼ ááµáá§á«0(áá³á¯áá¥).png"},"author":{"nickname":"TimeManagementPro","profile_image":"/images/polar-bear.jpg"}},{"id":10,"title":"여행 가고 싶은 곳이 있다면 공유해주세요","content":"content","like_count":800,"comment_count":1600,"view_count":2400,"created_at":"2024-03-25T15:45:00.000Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"WanderlustExplorer","profile_image":"/images/alphaca.jpg"}},{"id":11,"title":"window.location = \"/posts/","content":"window.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-23T09:14:15.662Z","image":{"name":"ááµáá§á¨áá¥ áá³áá¡.jpeg","path":"http://localhost:8080/uploads/1713923131694ááµáá§á¨áá¥ áá³áá¡.jpeg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":12,"title":"개시굴 좍성하기","content":"개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:11:39.091Z","image":{"name":"kakao-1w-profile.png","path":"http://localhost:8080/uploads/1713924699067kakao-1w-profile.png"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":13,"title":"제목을 입력해주세요.","content":"내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:23:18.165Z","image":{"name":"kakao-1w-profile.png","path":"http://localhost:8080/uploads/1713925398141kakao-1w-profile.png"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":14,"title":"awerwe","content":"rawetwtaert","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:24:21.517Z","image":{"name":"20230111_153420.jpg","path":"http://localhost:8080/uploads/171392546150720230111_153420.jpg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":15,"title":"awrtargaerg","content":"aergaergaergaergaerg","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:24:54.099Z","image":{"name":"default.jpg","path":"http://localhost:8080/public/images/default.jpg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":16,"title":"awrgrwg","content":"reagergaegerag","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:25:39.628Z","image":{"name":"20230111_153420.jpg","path":"http://localhost:8080/uploads/171392553962520230111_153420.jpg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":17,"title":"aergaerhre","content":"haehaethtah","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:25:48.683Z","image":{"name":"20230111_153420.jpg","path":"http://localhost:8080/uploads/171392554868220230111_153420.jpg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":18,"title":"argargaerg","content":"aergaergaegaerg","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:26:42.558Z","image":{"name":"20230111_153420.jpg","path":"http://localhost:8080/uploads/171392560253820230111_153420.jpg"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}},{"id":19,"title":"내용을 입력해주세요!","content":"내용을 입력하지 말아주세요","like_count":0,"comment_count":0,"view_count":0,"created_at":"2024-04-24T02:27:46.763Z","image":{"name":"github.com_ZZ3n_java-christmas-6-ZZ3n.png","path":"http://localhost:8080/uploads/1713925729579github.com_ZZ3n_java-christmas-6-ZZ3n.png"},"author":{"nickname":"DEFAULT","profile_image":"http://localhost:8080/public/images/default.jpg"}}]}
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "어제 늦게까지 일했더니 오늘 피곤해요",
+      "content": "content",
+      "like_count": 111,
+      "comment_count": 222,
+      "view_count": 333,
+      "created_at": "2024-04-17T07:30:54.696Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "JohnDoe1985",
+        "profile_image": "/images/snake.jpg"
+      }
+    },
+    {
+      "id": 2,
+      "title": "최근에 새로운 취미를 찾아보려고 하는데 추천 좀 해주세요",
+      "content": "content",
+      "like_count": 1111,
+      "comment_count": 2222,
+      "view_count": 3333,
+      "created_at": "2024-04-10T07:30:54.696Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "ArtLover123",
+        "profile_image": "/images/cat.jpg"
+      }
+    },
+    {
+      "id": 3,
+      "title": "titlettltletl",
+      "content": "contentcotntocontent",
+      "like_count": 500,
+      "comment_count": 1000,
+      "view_count": 1500,
+      "created_at": "2024-04-15T08:45:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "CodeNinja2024",
+        "profile_image": "/images/igu.jpg"
+      }
+    },
+    {
+      "id": 4,
+      "title": "titlettltletl",
+      "content": "contentcotntocontent",
+      "like_count": 300,
+      "comment_count": 600,
+      "view_count": 900,
+      "created_at": "2024-04-12T09:15:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "FitnessGuru87",
+        "profile_image": "/images/jellyfish.jpg"
+      }
+    },
+    {
+      "id": 5,
+      "title": "요즘 빈티지 패션 트렌드가 유행인 이유",
+      "content": "content",
+      "like_count": 700,
+      "comment_count": 1400,
+      "view_count": 2100,
+      "created_at": "2024-04-09T10:30:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "VintageFashionista",
+        "profile_image": "/images/cow.jpg"
+      }
+    },
+    {
+      "id": 6,
+      "title": "가족과 함께하는 홈시네마를 즐기는 방법",
+      "content": "content",
+      "like_count": 900,
+      "comment_count": 1800,
+      "view_count": 2700,
+      "created_at": "2024-04-05T11:45:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "MovieBuffFamily",
+        "profile_image": "/images/parrot.jpg"
+      }
+    },
+    {
+      "id": 7,
+      "title": "오늘은 무슨 요리를 해볼까요?",
+      "content": "content",
+      "like_count": 200,
+      "comment_count": 400,
+      "view_count": 600,
+      "created_at": "2024-04-03T12:00:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "ChefInTheMaking",
+        "profile_image": "/images/waterdog.jpg"
+      }
+    },
+    {
+      "id": 8,
+      "title": "독서의 매력과 효과에 대한 이야기",
+      "content": "content",
+      "like_count": 600,
+      "comment_count": 1200,
+      "view_count": 1800,
+      "created_at": "2024-04-01T13:15:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "BookwormLife",
+        "profile_image": "/images/profile-image.jpeg"
+      }
+    },
+    {
+      "id": 9,
+      "title": "시간 관리의 중요성과 팁들",
+      "content": "content",
+      "like_count": 400,
+      "comment_count": 800,
+      "view_count": 1200,
+      "created_at": "2024-03-29T14:30:00.000Z",
+      "image": {
+        "name": "áá³ááµáá©á«áá©ááµá¼ ááµáá§á«0(áá³á¯áá¥).png",
+        "path": "http://localhost:8080/uploads/1713923554419áá³ááµáá©á«áá©ááµá¼ ááµáá§á«0(áá³á¯áá¥).png"
+      },
+      "author": {
+        "nickname": "TimeManagementPro",
+        "profile_image": "/images/polar-bear.jpg"
+      }
+    },
+    {
+      "id": 10,
+      "title": "여행 가고 싶은 곳이 있다면 공유해주세요",
+      "content": "content",
+      "like_count": 800,
+      "comment_count": 1600,
+      "view_count": 2400,
+      "created_at": "2024-03-25T15:45:00.000Z",
+      "image": {
+        "name": "default.jpg",
+        "path": "http://localhost:8080/public/images/default.jpg"
+      },
+      "author": {
+        "nickname": "WanderlustExplorer",
+        "profile_image": "/images/alphaca.jpg"
+      }
+    },
+    {
+      "id": 11,
+      "title": "window.location = \"/posts/",
+      "content": "window.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"\r\nwindow.location = \"/posts/detail.html\"",
+      "like_count": 0,
+      "comment_count": 0,
+      "view_count": 0,
+      "created_at": "2024-04-23T09:14:15.662Z",
+      "image": {
+        "name": "ááµáá§á¨áá¥ áá³áá¡.jpeg",
+        "path": "http://localhost:8080/uploads/1713923131694ááµáá§á¨áá¥ áá³áá¡.jpeg"
+      },
+      "author": {
+        "nickname": "DEFAULT",
+        "profile_image": "http://localhost:8080/public/images/default.jpg"
+      }
+    },
+    {
+      "id": 12,
+      "title": "개시굴 좍성하기",
+      "content": "개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기 개시굴 좍성하기",
+      "like_count": 0,
+      "comment_count": 0,
+      "view_count": 0,
+      "created_at": "2024-04-24T02:11:39.091Z",
+      "image": {
+        "name": "kakao-1w-profile.png",
+        "path": "http://localhost:8080/uploads/1713924699067kakao-1w-profile.png"
+      },
+      "author": {
+        "nickname": "DEFAULT",
+        "profile_image": "http://localhost:8080/public/images/default.jpg"
+      }
+    },
+    {
+      "id": 13,
+      "title": "제목을 입력해주세요.",
+      "content": "내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!내용을 입력해주세요!",
+      "like_count": 0,
+      "comment_count": 0,
+      "view_count": 0,
+      "created_at": "2024-04-24T02:23:18.165Z",
+      "image": {
+        "name": "kakao-1w-profile.png",
+        "path": "http://localhost:8080/uploads/1713925398141kakao-1w-profile.png"
+      },
+      "author": {
+        "nickname": "DEFAULT",
+        "profile_image": "http://localhost:8080/public/images/default.jpg"
+      }
+    },
+    {
+      "id": 14,
+      "title": "아오 힘들다 QA!",
+      "content": "ㄱㅁㅈㄷㄱ",
+      "like_count": 0,
+      "comment_count": 0,
+      "view_count": 0,
+      "created_at": "2024-04-25T05:07:33.667Z",
+      "image": {
+        "name": "ááµáá¡á«áá­.png",
+        "path": "http://localhost:8080/uploads/1714021653662ááµáá¡á«áá­.png"
+      },
+      "author": {
+        "nickname": "DEFAULT",
+        "profile_image": "http://localhost:8080/public/images/default.jpg"
+      }
+    }
+  ]
+}
