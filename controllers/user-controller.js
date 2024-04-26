@@ -43,6 +43,9 @@ module.exports = new class {
 
             for (const user of UserModel.all()) {
                 if (user.email === email && user.password === password) {
+                    user.password = "secret";
+                    req.session.user = user;
+
                     res.json({
                         "msg": "login success"
                     });
