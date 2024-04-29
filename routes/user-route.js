@@ -9,7 +9,7 @@ const auth = require("./auth");
 /* GET users listing. */
 router.get('/exist', users.exist.validator, validate, users.exist.controller);
 
-router.get('/me', auth, users.me.validator, users.me.controller);
+router.get('/me', auth, users.me.validator, validate, users.me.controller);
 
 router.put('/me', auth, upload.single("image"), users.update.validator, validate, users.update.controller);
 
