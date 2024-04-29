@@ -89,7 +89,8 @@ module.exports = new class {
             const {title, content} = req.body;
 
             const post = PostModel.find(id);
-            post.update(title, content, req.file);
+            const sessionUser = req.session.user;
+            post.update(title, content, req.file, sessionUser);
             post.save();
 
             res.json({"msg": "ok"});

@@ -45,7 +45,8 @@ module.exports = new class {
             const {content} = req.body;
 
             const comment = CommentModel.find(id);
-            comment.update(content)
+            const sessionUser = req.session.user;
+            comment.update(content,sessionUser)
             comment.save()
 
             res.json({

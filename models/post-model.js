@@ -3,32 +3,43 @@ const {findIndex, findNextId} = require("./utils");
 module.exports = class {
     id = null;
     title = null;
-    content = null;
     image = {
         name: "default.jpg",
         path: "http://localhost:8080/public/images/default.jpg"
     };
-    created_at = null;
+    content = null;
+
     author = {
+        id: null,
         nickname: "DEFAULT",
         profile_image: "http://localhost:8080/public/images/default.jpg"
     };
+
+    created_at = null;
 
     like_count = 0;
     comment_count = 0;
     view_count = 0;
 
-    constructor(id, title, content, image, created_at, author, like_count = 0, comment_count = 0, view_count = 0) {
+    constructor(id,
+                title, image, content,
+                author, created_at,
+                like_count = 0, comment_count = 0, view_count = 0) {
         this.id = id;
         this.title = title;
-        this.content = content;
         this.image = image;
+        this.content = content;
+
+        this.author.id = author ? author.id : null;
+        this.author.nickname = author ? author.nickname : "ERROR";
+        this.author.profile_image = author ? author.profile_image : "ERROR";
+
         this.created_at = created_at;
+
         this.like_count = like_count;
         this.comment_count = comment_count;
         this.view_count = view_count;
-        this.author.nickname = author ? author.nickname : "ERROR";
-        this.author.profile_image = author ? author.profile_image : "ERROR";
+
     }
 
     static _loadJSON() {
@@ -45,10 +56,9 @@ module.exports = class {
         }
 
         return new this(
-            null, title, content,
-            {name: filename, path: filePath},
+            null, title, {name: filename, path: filePath}, content,
+            {id: author.id, nickname: author.nickname, profile_image: author.profile_image},
             new Date().toISOString(),
-            {nickname: author.nickname, profile_image: author.profile_image}
         )
     }
 
@@ -62,9 +72,8 @@ module.exports = class {
         const target = _json_data.posts[idx];
 
         return new this(
-            id, target.title, target.content,
-            target.image, target.created_at,
-            target.author,
+            id, target.title, target.image, target.content,
+            target.author, target.created_at,
             target.like_count, target.comment_count, target.view_count
         );
     }
@@ -78,13 +87,16 @@ module.exports = class {
                 {
                     id: nextId,
                     title: this.title,
+                    image: this.image,
                     content: this.content,
+
+                    author: this.author,
+
+                    created_at: this.created_at,
+
                     like_count: this.like_count,
                     comment_count: this.comment_count,
                     view_count: this.view_count,
-                    created_at: this.created_at,
-                    image: this.image,
-                    author: this.author,
                 }
             );
             this.id = nextId;
@@ -92,20 +104,23 @@ module.exports = class {
             let idx = findIndex(_json_data.posts, this.id)
 
             _json_data.posts[idx].title = this.title;
-            _json_data.posts[idx].content = this.content;
             _json_data.posts[idx].image = this.image;
+            _json_data.posts[idx].content = this.content;
+
+            _json_data.posts[idx].author = this.author;
+
             _json_data.posts[idx].created_at = this.created_at;
+
             _json_data.posts[idx].like_count = this.like_count;
             _json_data.posts[idx].comment_count = this.comment_count;
             _json_data.posts[idx].view_count = this.view_count;
-            _json_data.posts[idx].author = this.author;
 
         }
 
         jsonWrite("posts.json", _json_data)
     }
 
-    update(title, content, file) {
+    update(title, content, file, user) {
         let filename = this.image.name
         let filePath = this.image.path
 
@@ -117,6 +132,7 @@ module.exports = class {
         this.title = title;
         this.content = content;
         this.image = {name: filename, path: filePath};
+        this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
     }
 
     delete() {

@@ -3,18 +3,23 @@ const {findIndex, findNextId} = require("./utils");
 module.exports = class {
     id = null;
     content = null;
-    created_at = null;
+
     author = {
+        id: null,
         nickname: "ERROR",
         profile_image: "ERROR",
     }
+    created_at = null;
 
-    constructor(id, content, created_at, author) {
+    constructor(id, content, author, created_at) {
         this.id = id;
         this.content = content;
-        this.created_at = created_at;
+
+        this.author.id = author ? author.id : null;
         this.author.nickname = author ? author.nickname : "ERROR";
         this.author.profile_image = author ? author.profile_image : "ERROR";
+
+        this.created_at = created_at;
     }
 
     static _loadJSON() {
@@ -24,8 +29,8 @@ module.exports = class {
     static create(content, author) {
         return new this(
             null, content,
-            new Date().toISOString(),
-            {nickname: author.nickname, profile_image: author.profile_image}
+            {id: author.id, nickname: author.nickname, profile_image: author.profile_image},
+            new Date().toISOString()
         )
     }
 
@@ -38,7 +43,11 @@ module.exports = class {
         const idx = findIndex(_json_data.comments, id)
         const target = _json_data.comments[idx];
 
-        return new this(id, target.content, target.created_at, target.author);
+        return new this(
+            id, target.content,
+            target.author,
+            target.created_at
+        );
     }
 
     save() {
@@ -49,22 +58,25 @@ module.exports = class {
             _json_data.comments.push(
                 {
                     id: nextId,
+                    content: this.content,
+
                     author: this.author,
-                    created_at: new Date().toISOString(),
-                    content: this.content
+                    created_at: this.created_at,
                 }
             );
         } else {
             let idx = findIndex(_json_data.comments, this.id)
 
             _json_data.comments[idx].content = this.content;
+            _json_data.comments[idx].author = this.author;
         }
 
         jsonWrite("comments.json", _json_data)
     }
 
-    update(content) {
+    update(content, user) {
         this.content = content;
+        this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
     }
 
     delete() {
