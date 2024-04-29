@@ -46,11 +46,11 @@ module.exports = class {
 
             _json_data.users.push(
                 {
-                    "id": nextId,
-                    "email": this.email,
-                    "password": this.password,
-                    "nickname": this.nickname,
-                    "profile_image": this.profile_image,
+                    id: nextId,
+                    email: this.email,
+                    password: this.password,
+                    nickname: this.nickname,
+                    profile_image: this.profile_image,
                 }
             );
         } else {

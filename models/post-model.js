@@ -5,13 +5,13 @@ module.exports = class {
     title = null;
     content = null;
     image = {
-        "name": "default.jpg",
-        "path": "http://localhost:8080/public/images/default.jpg"
+        name: "default.jpg",
+        path: "http://localhost:8080/public/images/default.jpg"
     };
     created_at = null;
     author = {
-        "nickname": "DEFAULT",
-        "profile_image": "http://localhost:8080/public/images/default.jpg"
+        nickname: "DEFAULT",
+        profile_image: "http://localhost:8080/public/images/default.jpg"
     };
 
     like_count = 0;
@@ -76,15 +76,15 @@ module.exports = class {
 
             _json_data.posts.push(
                 {
-                    "id": nextId,
-                    "title": this.title,
-                    "content": this.content,
-                    "like_count": this.like_count,
-                    "comment_count": this.comment_count,
-                    "view_count": this.view_count,
-                    "created_at": this.created_at,
-                    "image": this.image,
-                    "author": this.author,
+                    id: nextId,
+                    title: this.title,
+                    content: this.content,
+                    like_count: this.like_count,
+                    comment_count: this.comment_count,
+                    view_count: this.view_count,
+                    created_at: this.created_at,
+                    image: this.image,
+                    author: this.author,
                 }
             );
             this.id = nextId;

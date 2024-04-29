@@ -24,9 +24,9 @@ module.exports = new class {
             }
 
             res.json({
-                "msg": "OK",
-                "email_exist": emailCheck,
-                "nickname_exist": nicknameCheck,
+                msg: "OK",
+                email_exist: emailCheck,
+                nickname_exist: nicknameCheck,
             });
         }
     }
