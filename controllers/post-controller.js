@@ -46,8 +46,9 @@ module.exports = new class {
             body('content').trim().notEmpty(),
         ],
         controller: (req, res) => {
+            const sessionUser = req.session.user;
             const {title, content} = req.body;
-            const post = PostModel.create(title, content, req.file);
+            const post = PostModel.create(title, content, req.file, sessionUser);
 
             post.save();
 

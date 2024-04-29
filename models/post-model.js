@@ -8,16 +8,17 @@ module.exports = class {
         "name": "default.jpg",
         "path": "http://localhost:8080/public/images/default.jpg"
     };
-    like_count = 0;
-    comment_count = 0;
-    view_count = 0;
     created_at = null;
     author = {
         "nickname": "DEFAULT",
         "profile_image": "http://localhost:8080/public/images/default.jpg"
     };
 
-    constructor(id, title, content, image, created_at, like_count = 0, comment_count = 0, view_count = 0) {
+    like_count = 0;
+    comment_count = 0;
+    view_count = 0;
+
+    constructor(id, title, content, image, created_at, author, like_count = 0, comment_count = 0, view_count = 0) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -26,13 +27,15 @@ module.exports = class {
         this.like_count = like_count;
         this.comment_count = comment_count;
         this.view_count = view_count;
+        this.author.nickname = author ? author.nickname : "ERROR";
+        this.author.profile_image = author ? author.profile_image : "ERROR";
     }
 
     static _loadJSON() {
         return jsonParse("posts.json")
     }
 
-    static create(title, content, file) {
+    static create(title, content, file, author) {
         let filename = "default.jpg";
         let filePath = "http://localhost:8080/public/images/default.jpg";
 
@@ -41,7 +44,12 @@ module.exports = class {
             filePath = `http://localhost:8080/uploads/${file.filename}`;
         }
 
-        return new this(null, title, content, {name: filename, path: filePath}, new Date().toISOString())
+        return new this(
+            null, title, content,
+            {name: filename, path: filePath},
+            new Date().toISOString(),
+            {nickname: author.nickname, profile_image: author.profile_image}
+        )
     }
 
     static all() {
@@ -53,8 +61,12 @@ module.exports = class {
         const idx = findIndex(_json_data.posts, id)
         const target = _json_data.posts[idx];
 
-        return new this(id, target.title, target.content, target.image, target.created_at,
-            target.like_count, target.comment_count, target.view_count);
+        return new this(
+            id, target.title, target.content,
+            target.image, target.created_at,
+            target.author,
+            target.like_count, target.comment_count, target.view_count
+        );
     }
 
     save() {
@@ -70,7 +82,7 @@ module.exports = class {
                     "like_count": this.like_count,
                     "comment_count": this.comment_count,
                     "view_count": this.view_count,
-                    "created_at": new Date().toISOString(),
+                    "created_at": this.created_at,
                     "image": this.image,
                     "author": this.author,
                 }
@@ -86,6 +98,7 @@ module.exports = class {
             _json_data.posts[idx].like_count = this.like_count;
             _json_data.posts[idx].comment_count = this.comment_count;
             _json_data.posts[idx].view_count = this.view_count;
+            _json_data.posts[idx].author = this.author;
 
         }
 
