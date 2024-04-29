@@ -1,22 +1,11 @@
 const findNextId = (data) => {
-    let nextId = 0;
-    for (const element of data) {
-        if (element.id > nextId) {
-            nextId = element.id;
-        }
-    }
-    return nextId + 1;
+    const ids = data.map(element => element.id);
+    return Math.max(0, ...ids) + 1;
 };
 
 const findIndex = (data, id) => {
     id = parseInt(id)
-    for (let i = 0; i < data.length; i++) {
-        const element = data[i];
-        if (element.id === id) {
-            return i;
-        }
-    }
-    return null;
+    return data.findIndex(element => element.id === id)
 }
 
 exports.findNextId = findNextId;

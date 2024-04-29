@@ -4,6 +4,9 @@ module.exports = class {
     id = null;
     content = null;
 
+    post = {
+        id: null,
+    }
     author = {
         id: null,
         nickname: "ERROR",
@@ -11,9 +14,11 @@ module.exports = class {
     }
     created_at = null;
 
-    constructor(id, content, author, created_at) {
+    constructor(id, content, post, author, created_at) {
         this.id = id;
         this.content = content;
+
+        this.post.id = post.id;
 
         this.author.id = author ? author.id : null;
         this.author.nickname = author ? author.nickname : "ERROR";
@@ -26,16 +31,17 @@ module.exports = class {
         return jsonParse("comments.json")
     }
 
-    static create(content, author) {
+    static create(content, post_id, author) {
         return new this(
             null, content,
+            {id: post_id},
             {id: author.id, nickname: author.nickname, profile_image: author.profile_image},
             new Date().toISOString()
         )
     }
 
     static all() {
-        return this._loadJSON().comments;
+        return this._loadJSON().comments.sort((a, b) => b.id - a.id);
     }
 
     static find(id) {
@@ -45,9 +51,18 @@ module.exports = class {
 
         return new this(
             id, target.content,
+            target.post,
             target.author,
             target.created_at
         );
+    }
+
+    static findAllByPostId(post_id) {
+        return this._loadJSON().comments
+            .filter(comment => {
+                return parseInt(comment.post.id) === parseInt(post_id);
+            })
+            .sort((a, b) => b.id - a.id);
     }
 
     save() {
@@ -60,6 +75,7 @@ module.exports = class {
                     id: nextId,
                     content: this.content,
 
+                    post: this.post,
                     author: this.author,
                     created_at: this.created_at,
                 }
@@ -68,6 +84,7 @@ module.exports = class {
             let idx = findIndex(_json_data.comments, this.id)
 
             _json_data.comments[idx].content = this.content;
+            _json_data.comments[idx].post = this.post;
             _json_data.comments[idx].author = this.author;
         }
 

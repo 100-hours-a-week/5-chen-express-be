@@ -8,7 +8,7 @@ module.exports = new class {
         validator: [],
         controller: (req, res) => {
             res.json({
-                comments: CommentModel.all().sort((a, b) => b.id - a.id)
+                comments: CommentModel.all(),
             })
         }
     }
@@ -21,9 +21,8 @@ module.exports = new class {
         controller: (req, res) => {
             const sessionUser = req.session.user;
             const {content, post_id} = req.body;
-            console.log(`POST ID :${post_id}`)
 
-            const comment = CommentModel.create(content, sessionUser);
+            const comment = CommentModel.create(content, post_id, sessionUser);
             comment.save()
 
             res.status(HttpStatus.CREATED);
@@ -46,7 +45,7 @@ module.exports = new class {
 
             const comment = CommentModel.find(id);
             const sessionUser = req.session.user;
-            comment.update(content,sessionUser)
+            comment.update(content, sessionUser)
             comment.save()
 
             res.json({

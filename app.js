@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+const FileStore = require('session-file-store')(session)
 
 const fs = require('fs');
 
@@ -30,7 +30,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const maxAge = 60 * 60 * 1_000
+const fileStoreOptions = {
+    path: "./sessions",
+};
+const maxAge = 60 * 60 * 1_000;
 app.use(session({
     secret: "secret",
     cookie: {
@@ -38,9 +41,7 @@ app.use(session({
         maxAge: maxAge,
         secure: false,
     },
-    store: new MemoryStore({
-        checkPeriod: maxAge,
-    }),
+    store: new FileStore(fileStoreOptions),
     resave: false,
     saveUninitialized: true,
 }))

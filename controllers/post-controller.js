@@ -9,10 +9,10 @@ module.exports = new class {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
             const id = req.params.id;
-            const post = PostModel.find(id);
+            const comments = CommentModel.findAllByPostId(id);
+            console.log(comments)
             res.json({
-                post: post,
-                comments: CommentModel.all().sort((a, b) => b.id - a.id)
+                comments: comments,
             });
         }
     }
