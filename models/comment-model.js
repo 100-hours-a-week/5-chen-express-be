@@ -3,18 +3,30 @@ const {findIndex, findNextId} = require("./utils");
 module.exports = class {
     id = null;
     content = null;
+    created_at = null;
+    author = {
+        nickname: "ERROR",
+        profile_image: "ERROR",
+    }
 
-    constructor(id, content) {
+    constructor(id, content, created_at, author) {
         this.id = id;
         this.content = content;
+        this.created_at = created_at;
+        this.author.nickname = author ? author.nickname : "ERROR";
+        this.author.profile_image = author ? author.profile_image : "ERROR";
     }
 
     static _loadJSON() {
         return jsonParse("comments.json")
     }
 
-    static create(content) {
-        return new this(null, content)
+    static create(content, author) {
+        return new this(
+            null, content,
+            new Date().toISOString(),
+            {nickname: author.nickname, profile_image: author.profile_image}
+        )
     }
 
     static all() {
@@ -26,7 +38,7 @@ module.exports = class {
         const idx = findIndex(_json_data.comments, id)
         const target = _json_data.comments[idx];
 
-        return new this(id, target.content);
+        return new this(id, target.content, target.created_at, target.author);
     }
 
     save() {
@@ -36,13 +48,10 @@ module.exports = class {
 
             _json_data.comments.push(
                 {
-                    "id": nextId,
-                    "author": {
-                        "nickname": "AppleFan",
-                        "profile_image": "/images/igu.jpg"
-                    },
-                    "created_at": new Date().toISOString(),
-                    "content": this.content
+                    id: nextId,
+                    author: this.author,
+                    created_at: new Date().toISOString(),
+                    content: this.content
                 }
             );
         } else {

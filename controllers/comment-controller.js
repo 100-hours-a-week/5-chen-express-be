@@ -19,10 +19,11 @@ module.exports = new class {
             body('content').trim().notEmpty()
         ],
         controller: (req, res) => {
+            const sessionUser = req.session.user;
             const {content, post_id} = req.body;
             console.log(`POST ID :${post_id}`)
 
-            const comment = CommentModel.create(content);
+            const comment = CommentModel.create(content, sessionUser);
             comment.save()
 
             res.status(HttpStatus.CREATED);
