@@ -58,6 +58,17 @@ module.exports = new class {
         }
     };
 
+    logout = {
+        validator: [],
+        controller: (req, res) => {
+            req.session.destroy();
+
+            res.json({
+                msg: "Logout success",
+            })
+        }
+    }
+
     signup = {
         validator: [
             body('email').trim().notEmpty(),
