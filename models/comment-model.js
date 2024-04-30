@@ -1,4 +1,4 @@
-const {findIndex, findNextId} = require("./utils");
+const {findIndex, findNextId, numberOrNull} = require("./utils");
 
 module.exports = class {
     id = null;
@@ -15,12 +15,12 @@ module.exports = class {
     created_at = null;
 
     constructor(id, content, post, author, created_at) {
-        this.id = id;
+        this.id = numberOrNull(id);
         this.content = content;
 
-        this.post.id = post.id;
+        this.post.id = numberOrNull(post.id);
 
-        this.author.id = author ? author.id : null;
+        this.author.id = author ? numberOrNull(author.id) : null;
         this.author.nickname = author ? author.nickname : "ERROR";
         this.author.profile_image = author ? author.profile_image : "ERROR";
 
@@ -102,5 +102,12 @@ module.exports = class {
         _json_data.comments.splice(idx, 1)
 
         jsonWrite("comments.json", _json_data)
+    }
+
+    can(user) {
+        if (user.is_admin) {
+            return true;
+        }
+        return parseInt(user.id) === this.author.id;
     }
 }

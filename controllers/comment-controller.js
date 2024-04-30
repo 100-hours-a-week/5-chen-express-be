@@ -42,9 +42,19 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id
             const {content} = req.body;
+            const sessionUser = req.session.user;
 
             const comment = CommentModel.find(id);
-            const sessionUser = req.session.user;
+
+            if (!comment.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    comment: comment
+                })
+                return;
+            }
+
             comment.update(content, sessionUser)
             comment.save()
 
@@ -59,8 +69,19 @@ module.exports = new class {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
             const id = req.params.id
+            const sessionUser = req.session.user;
 
             const comment = CommentModel.find(id);
+
+            if (!comment.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    comment: comment
+                })
+                return;
+            }
+
             comment.delete();
 
             res.json({

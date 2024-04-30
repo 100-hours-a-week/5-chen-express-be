@@ -8,5 +8,11 @@ const findIndex = (data, id) => {
     return data.findIndex(element => element.id === id)
 }
 
+const numberOrNull = num => {
+    const parsedNum = parseInt(num);
+    return isNaN(parsedNum) ? null : parsedNum;
+}
+
 exports.findNextId = findNextId;
 exports.findIndex = findIndex;
+exports.numberOrNull = numberOrNull;
