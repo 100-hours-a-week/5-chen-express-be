@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
     if (req.session.user == undefined) {
         res.status(HttpStatus.UNAUTHORIZED);
         res.json({
-            msg: "MUST LOGGED IN",
+            msg: "로그인이 필요합니다.",
         });
         console.log("##### NOT LOGGED IN");
         return;
