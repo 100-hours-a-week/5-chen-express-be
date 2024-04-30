@@ -3,7 +3,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require('cors')
+const cors = require('cors');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session)
+
 const fs = require('fs');
 
 const indexRouter = require('./routes/index-route');
@@ -16,9 +19,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-//
+
 app.use(cors({
-    origin: "*",
+    origin: ["http://localhost:3000"],
     credentials: true
 }))
 app.use(logger('dev'));
@@ -26,6 +29,22 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const fileStoreOptions = {
+    path: "./sessions",
+};
+const maxAge = 60 * 60 * 1_000;
+app.use(session({
+    secret: "secret",
+    cookie: {
+        httpOnly: true,
+        maxAge: maxAge,
+        secure: false,
+    },
+    store: new FileStore(fileStoreOptions),
+    resave: false,
+    saveUninitialized: true,
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

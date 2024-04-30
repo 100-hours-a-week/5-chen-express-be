@@ -1,0 +1,21 @@
+{
+  "next_id": 1,
+  "users": [
+    {
+      "id": 1,
+      "email": "aaaa@gmail.com",
+      "password": "Qwer123!@#",
+      "nickname": "빨간앵무",
+      "profile_image": "http://localhost:8080/uploads/1714358880295parrot.jpg",
+      "is_admin": true
+    },
+    {
+      "id": 2,
+      "email": "bbbb@gmail.com",
+      "password": "Qwer123!@#",
+      "nickname": "양양",
+      "profile_image": "http://localhost:8080/uploads/1714440197210sheep.jpg",
+      "is_admin": false
+    }
+  ]
+}

@@ -8,11 +8,17 @@ module.exports = new class {
     comments = {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
-            const id = req.params.id;
-            const post = PostModel.find(id);
+            const post_id = req.params.id;
+            const sessionUser = req.session.user;
+
+            const comments = CommentModel.findAllByPostId(post_id, sessionUser);
+            const post = PostModel.find(post_id);
+
+            post.syncCommentCount(comments.length);
+            post.save();
+
             res.json({
-                post: post,
-                comments: CommentModel.all().sort((a, b) => b.id - a.id)
+                comments: comments,
             });
         }
     }
@@ -33,9 +39,14 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const post = PostModel.find(id);
+            const sessionUser = req.session.user;
+
+            post.addViewCount();
+            post.save();
 
             res.json({
                 "post": post,
+                "can": post.can(sessionUser),
             });
         }
     }
@@ -46,8 +57,9 @@ module.exports = new class {
             body('content').trim().notEmpty(),
         ],
         controller: (req, res) => {
+            const sessionUser = req.session.user;
             const {title, content} = req.body;
-            const post = PostModel.create(title, content, req.file);
+            const post = PostModel.create(title, content, req.file, sessionUser);
 
             post.save();
 
@@ -67,6 +79,16 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const post = PostModel.find(id);
+            const sessionUser = req.session.user;
+
+            if (!post.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    post: post
+                })
+                return;
+            }
 
             post.delete();
 
@@ -86,9 +108,18 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const {title, content} = req.body;
+            const sessionUser = req.session.user;
 
             const post = PostModel.find(id);
-            post.update(title, content, req.file);
+            if (!post.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    post: post
+                });
+                return;
+            }
+            post.update(title, content, req.file, sessionUser);
             post.save();
 
             res.json({"msg": "ok"});

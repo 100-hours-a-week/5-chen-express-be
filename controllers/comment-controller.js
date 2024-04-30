@@ -8,7 +8,7 @@ module.exports = new class {
         validator: [],
         controller: (req, res) => {
             res.json({
-                "comments": CommentModel.all().sort((a, b) => b.id - a.id)
+                comments: CommentModel.all(),
             })
         }
     }
@@ -19,11 +19,10 @@ module.exports = new class {
             body('content').trim().notEmpty()
         ],
         controller: (req, res) => {
+            const sessionUser = req.session.user;
             const {content, post_id} = req.body;
-            console.log(`POST ID :${post_id}`)
 
-            const comment = CommentModel.create(content);
-            comment.save()
+            const comment = CommentModel.create(content, post_id, sessionUser);
 
             res.status(HttpStatus.CREATED);
             res.json({
@@ -42,9 +41,20 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id
             const {content} = req.body;
+            const sessionUser = req.session.user;
 
             const comment = CommentModel.find(id);
-            comment.update(content)
+
+            if (!comment.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    comment: comment
+                })
+                return;
+            }
+
+            comment.update(content, sessionUser)
             comment.save()
 
             res.json({
@@ -58,8 +68,19 @@ module.exports = new class {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
             const id = req.params.id
+            const sessionUser = req.session.user;
 
             const comment = CommentModel.find(id);
+
+            if (!comment.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    comment: comment
+                })
+                return;
+            }
+
             comment.delete();
 
             res.json({
