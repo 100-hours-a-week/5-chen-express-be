@@ -1,4 +1,4 @@
-const {findIndex, findNextId, parseIntOrNull} = require("./utils");
+const {findIndex, parseIntOrNull} = require("./utils");
 
 module.exports = class {
     id = null;
@@ -68,11 +68,11 @@ module.exports = class {
     save() {
         const _json_data = this.constructor._loadJSON()
         if (this.id == null) {
-            const nextId = findNextId(_json_data.comments)
-
+            const next_id = parseInt(_json_data.next_id);
+            _json_data.next_id = next_id + 1;
             _json_data.comments.push(
                 {
-                    id: nextId,
+                    id: next_id,
                     content: this.content,
 
                     post: this.post,
@@ -80,6 +80,7 @@ module.exports = class {
                     created_at: this.created_at,
                 }
             );
+            this.id = next_id;
         } else {
             let idx = findIndex(_json_data.comments, this.id)
 

@@ -1,4 +1,4 @@
-const {findIndex, findNextId} = require("./utils");
+const {findIndex} = require("./utils");
 
 module.exports = class {
     id = null;
@@ -44,11 +44,12 @@ module.exports = class {
     save() {
         const _json_data = this.constructor._loadJSON()
         if (this.id == null) {
-            const nextId = findNextId(_json_data.users)
+            const next_id = parseInt(_json_data.next_id);
 
+            _json_data.next_id = next_id + 1;
             _json_data.users.push(
                 {
-                    id: nextId,
+                    id: next_id,
                     email: this.email,
                     password: this.password,
                     nickname: this.nickname,
@@ -56,6 +57,7 @@ module.exports = class {
                     is_admin: this.is_admin,
                 }
             );
+            this.id = next_id;
         } else {
             let idx = findIndex(_json_data.users, this.id)
 
