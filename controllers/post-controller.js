@@ -10,7 +10,7 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const comments = CommentModel.findAllByPostId(id);
-            console.log(comments)
+
             res.json({
                 comments: comments,
             });
@@ -76,6 +76,7 @@ module.exports = new class {
                     msg: "FORBIDDEN",
                     post: post
                 })
+                return;
             }
 
             post.delete();
@@ -104,7 +105,8 @@ module.exports = new class {
                 res.json({
                     msg: "FORBIDDEN",
                     post: post
-                })
+                });
+                return;
             }
             post.update(title, content, req.file, sessionUser);
             post.save();

@@ -124,6 +124,7 @@ module.exports = class {
         let filename = this.image.name
         let filePath = this.image.path
 
+        console.log(file);
         if (file != null) {
             filename = file.originalname;
             filePath = `http://localhost:8080/uploads/${file.filename}`;
