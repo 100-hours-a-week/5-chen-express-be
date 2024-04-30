@@ -57,10 +57,14 @@ module.exports = class {
         );
     }
 
-    static findAllByPostId(post_id) {
+    static findAllByPostId(post_id, user) {
         return this._loadJSON().comments
             .filter(comment => {
                 return parseInt(comment.post.id) === parseInt(post_id);
+            })
+            .map(comment => {
+                comment.can = comment.author.id === user.id || user.is_admin;
+                return comment;
             })
             .sort((a, b) => b.id - a.id);
     }

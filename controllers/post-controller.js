@@ -9,7 +9,8 @@ module.exports = new class {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
             const id = req.params.id;
-            const comments = CommentModel.findAllByPostId(id);
+            const sessionUser = req.session.user;
+            const comments = CommentModel.findAllByPostId(id, sessionUser);
 
             res.json({
                 comments: comments,
@@ -33,9 +34,11 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const post = PostModel.find(id);
+            const sessionUser = req.session.user;
 
             res.json({
                 "post": post,
+                "can": post.can(sessionUser),
             });
         }
     }
