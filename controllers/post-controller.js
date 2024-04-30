@@ -68,6 +68,15 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const post = PostModel.find(id);
+            const sessionUser = req.session.user;
+
+            if (!post.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    post: post
+                })
+            }
 
             post.delete();
 
@@ -87,9 +96,16 @@ module.exports = new class {
         controller: (req, res) => {
             const id = req.params.id;
             const {title, content} = req.body;
+            const sessionUser = req.session.user;
 
             const post = PostModel.find(id);
-            const sessionUser = req.session.user;
+            if (!post.can(sessionUser)) {
+                res.status(HttpStatus.FORBIDDEN);
+                res.json({
+                    msg: "FORBIDDEN",
+                    post: post
+                })
+            }
             post.update(title, content, req.file, sessionUser);
             post.save();
 

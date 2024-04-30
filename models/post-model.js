@@ -135,6 +135,14 @@ module.exports = class {
         this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
     }
 
+    can(user) {
+        if (user.is_admin) {
+            return true;
+        }
+        return user.id == this.author.id;
+    }
+
+
     delete() {
         const _json_data = this.constructor._loadJSON()
         let idx = findIndex(_json_data.posts, this.id)
