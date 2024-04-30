@@ -8,9 +8,14 @@ module.exports = new class {
     comments = {
         validator: [param("id").trim().isNumeric()],
         controller: (req, res) => {
-            const id = req.params.id;
+            const post_id = req.params.id;
             const sessionUser = req.session.user;
-            const comments = CommentModel.findAllByPostId(id, sessionUser);
+
+            const comments = CommentModel.findAllByPostId(post_id, sessionUser);
+            const post = PostModel.find(post_id);
+
+            post.syncCommentCount(comments.length);
+            post.save();
 
             res.json({
                 comments: comments,
@@ -35,6 +40,9 @@ module.exports = new class {
             const id = req.params.id;
             const post = PostModel.find(id);
             const sessionUser = req.session.user;
+
+            post.addViewCount();
+            post.save();
 
             res.json({
                 "post": post,

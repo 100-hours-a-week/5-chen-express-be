@@ -23,7 +23,6 @@ module.exports = new class {
             const {content, post_id} = req.body;
 
             const comment = CommentModel.create(content, post_id, sessionUser);
-            comment.save()
 
             res.status(HttpStatus.CREATED);
             res.json({

@@ -137,6 +137,14 @@ module.exports = class {
         this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
     }
 
+    addViewCount() {
+        this.view_count = this.view_count + 1
+    }
+
+    syncCommentCount(count) {
+        this.comment_count = count;
+    }
+
     can(user) {
         if (user.is_admin) {
             return true;
