@@ -1,4 +1,4 @@
-const {findIndex, findNextId} = require("./utils");
+const {findIndex, findNextId, parseIntOrNull} = require("./utils");
 
 module.exports = class {
     id = null;
@@ -25,12 +25,12 @@ module.exports = class {
                 title, image, content,
                 author, created_at,
                 like_count = 0, comment_count = 0, view_count = 0) {
-        this.id = id;
+        this.id = parseIntOrNull(id);
         this.title = title;
         this.image = image;
         this.content = content;
 
-        this.author.id = author ? author.id : null;
+        this.author.id = author ? parseInt(author.id) : null;
         this.author.nickname = author ? author.nickname : "ERROR";
         this.author.profile_image = author ? author.profile_image : "ERROR";
 
@@ -139,7 +139,7 @@ module.exports = class {
         if (user.is_admin) {
             return true;
         }
-        return user.id == this.author.id;
+        return parseInt(user.id) === this.author.id;
     }
 
 

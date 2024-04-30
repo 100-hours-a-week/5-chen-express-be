@@ -1,4 +1,4 @@
-const {findIndex, findNextId, numberOrNull} = require("./utils");
+const {findIndex, findNextId, parseIntOrNull} = require("./utils");
 
 module.exports = class {
     id = null;
@@ -15,12 +15,12 @@ module.exports = class {
     created_at = null;
 
     constructor(id, content, post, author, created_at) {
-        this.id = numberOrNull(id);
+        this.id = parseIntOrNull(id);
         this.content = content;
 
-        this.post.id = numberOrNull(post.id);
+        this.post.id = parseIntOrNull(post.id);
 
-        this.author.id = author ? numberOrNull(author.id) : null;
+        this.author.id = author ? parseIntOrNull(author.id) : null;
         this.author.nickname = author ? author.nickname : "ERROR";
         this.author.profile_image = author ? author.profile_image : "ERROR";
 
