@@ -18,11 +18,13 @@ const pool = mysql.createPool({
 async function query(sql, ...values) {
   try {
     // For pool initialization, see above
-    const [rows, fields] = await pool.query('SELECT * FROM `User`', values);
+    const [rows, fields] = await pool.query(sql, values);
+    console.log(rows);
     return rows
     // Connection is automatically released when query resolves
   } catch (err) {
     console.log(err);
+    return Promise.reject(err)
   }
 }
 

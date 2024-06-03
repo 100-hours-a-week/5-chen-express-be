@@ -14,7 +14,7 @@ const indexRouter = require('./routes/index-route');
 const usersRouter = require('./routes/user-route');
 const postsRouter = require('./routes/post-route');
 const commentsRouter = require('./routes/comment-route');
-const {testQuery, query} = require("./models/mysql-model");
+const {query} = require("./models/mysql-model");
 
 var app = express();
 
@@ -80,7 +80,6 @@ global.jsonParse = (...paths) => {
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
 
 // error handler
 app.use(function (err, req, res, next) {

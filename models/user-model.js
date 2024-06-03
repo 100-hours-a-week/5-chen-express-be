@@ -1,80 +1,59 @@
-const {findIndex} = require("./utils");
+const {query} = require("./mysql-model");
 
 module.exports = class {
-    id = null;
-    email = null;
-    password = null;
-    nickname = null;
-    profile_image = null;
-    is_admin = false;
+  id = null;
+  email = null;
+  password = null;
+  nickname = null;
+  profile_image = null;
+  is_admin = false;
 
 
-    constructor(id, email, password, nickname, profile_image, is_admin) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.profile_image = profile_image;
-        this.is_admin = is_admin;
+  constructor(id, email, password, nickname, profile_image, is_admin) {
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.nickname = nickname;
+    this.profile_image = profile_image;
+    this.is_admin = is_admin;
+  }
+
+  static of(row) {
+    return new this(row.id, row.email, row.password, row.nickname, row.profile_image, false);
+  }
+
+  static create(email, password, nickname, profile_image) {
+    return new this(null, email, password, nickname, profile_image, false)
+  }
+
+  static async find(id) {
+    return query("SELECT u.id, u.email, u.password, u.nickname, u.profile_image FROM `User` AS u WHERE u.id = ? AND u.deleted_at IS NULL;", id)
+      .then(users => {
+        const user = users[0];
+
+        return this.of(user)
+      })
+  }
+
+  static all() {
+    return query("SELECT * FROM `User` WHERE deleted_at IS NULL").then(rows => rows.map(row => this.of(row)))
+  }
+
+  save() {
+    if (this.id == null) {
+      query("INSERT INTO `User` (profile_image, email, password, nickname, created_at, updated_at, deleted_at) VALUES (?, ?, ?, ?, now(), NULL, NULL)", this.profile_image, this.email, this.password, this.nickname)
+        .then(rows => {
+          this.id = rows.insertId;
+        });
+    } else {
+      query("UPDATE `User` SET profile_image = ?, nickname = ?, password = ? WHERE id = ?", this.profile_image, this.nickname, this.password, this.id);
     }
+  }
 
-    static _loadJSON() {
-        return jsonParse("users.json")
-    }
-
-    static create(email, password, nickname, profile_image) {
-
-        return new this(null, email, password, nickname, profile_image, false)
-    }
-
-    static find(id) {
-        const _json_data = this._loadJSON()
-
-        const idx = findIndex(_json_data.users, id);
-
-        const target = _json_data.users[idx];
-
-        return new this(id, target.email, target.password, target.nickname, target.profile_image, target.is_admin);
-    }
-
-    static all() {
-        return this._loadJSON().users;
-    }
-
-    save() {
-        const _json_data = this.constructor._loadJSON()
-        if (this.id == null) {
-            const next_id = parseInt(_json_data.next_id);
-
-            _json_data.next_id = next_id + 1;
-            _json_data.users.push(
-                {
-                    id: next_id,
-                    email: this.email,
-                    password: this.password,
-                    nickname: this.nickname,
-                    profile_image: this.profile_image,
-                    is_admin: this.is_admin,
-                }
-            );
-            this.id = next_id;
-        } else {
-            let idx = findIndex(_json_data.users, this.id)
-
-            _json_data.users[idx].email = this.email;
-            _json_data.users[idx].password = this.password;
-            _json_data.users[idx].nickname = this.nickname;
-            _json_data.users[idx].profile_image = this.profile_image;
-            _json_data.users[idx].is_admin = this.is_admin;
-
-        }
-        jsonWrite("users.json", _json_data)
-    }
-
-    update(email, password, nickname, filePath) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.profile_image = filePath
-    }
+  update(email, password, nickname, filePath) {
+    this.email = email;
+    this.password = password;
+    this.nickname = nickname;
+    this.profile_image = filePath
+  }
 }
