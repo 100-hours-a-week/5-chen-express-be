@@ -4,88 +4,87 @@ const CommentModel = require("../models/comment-model")
 
 
 module.exports = new class {
-    list = {
-        validator: [],
-        controller: (req, res) => {
-            res.json({
-                comments: CommentModel.all(),
-            })
-        }
+  list = {
+    validator: [],
+    controller: (req, res) => {
+      CommentModel.all()
+        .then(comments => res.json({comments: comments,}))
+    }
+  }
+
+  write = {
+    validator: [
+      body("post_id").trim().isNumeric(),
+      body('content').trim().notEmpty()
+    ],
+    controller: (req, res) => {
+      const sessionUser = req.session.user;
+      const {content, post_id} = req.body;
+
+      const comment = CommentModel.create(content, post_id, sessionUser);
+
+      res.status(HttpStatus.CREATED);
+      res.json({
+        "msg": "created",
+        "comment": comment,
+      });
     }
 
-    write = {
-        validator: [
-            body("post_id").trim().isNumeric(),
-            body('content').trim().notEmpty()
-        ],
-        controller: (req, res) => {
-            const sessionUser = req.session.user;
-            const {content, post_id} = req.body;
+  }
 
-            const comment = CommentModel.create(content, post_id, sessionUser);
+  update = {
+    validator: [
+      param("id").trim().isNumeric(),
+      body('content').trim().notEmpty()
+    ],
+    controller: (req, res) => {
+      const id = req.params.id
+      const {content} = req.body;
+      const sessionUser = req.session.user;
 
-            res.status(HttpStatus.CREATED);
-            res.json({
-                "msg": "created",
-                "comment": comment,
-            });
+      CommentModel.find(id).then(comment => {
+        if (!comment.can(sessionUser)) {
+          res.status(HttpStatus.FORBIDDEN);
+          res.json({
+            msg: "FORBIDDEN",
+            comment: comment
+          })
+          return;
         }
 
+        comment.update(content, sessionUser)
+        comment.save()
+
+        res.json({
+          "msg": "ok",
+          comment: comment
+        });
+      });
     }
 
-    update = {
-        validator: [
-            param("id").trim().isNumeric(),
-            body('content').trim().notEmpty()
-        ],
-        controller: (req, res) => {
-            const id = req.params.id
-            const {content} = req.body;
-            const sessionUser = req.session.user;
+  }
+  delete = {
+    validator: [param("id").trim().isNumeric()],
+    controller: (req, res) => {
+      const id = req.params.id
+      const sessionUser = req.session.user;
 
-            const comment = CommentModel.find(id);
-
-            if (!comment.can(sessionUser)) {
-                res.status(HttpStatus.FORBIDDEN);
-                res.json({
-                    msg: "FORBIDDEN",
-                    comment: comment
-                })
-                return;
-            }
-
-            comment.update(content, sessionUser)
-            comment.save()
-
-            res.json({
-                "msg": "ok",
-                comment: comment
-            });
+      CommentModel.find(id).then(comment => {
+        if (!comment.can(sessionUser)) {
+          res.status(HttpStatus.FORBIDDEN);
+          res.json({
+            msg: "FORBIDDEN",
+            comment: comment
+          })
+          return;
         }
 
+        comment.delete();
+
+        res.json({
+          msg: "ok",
+        })
+      });
     }
-    delete = {
-        validator: [param("id").trim().isNumeric()],
-        controller: (req, res) => {
-            const id = req.params.id
-            const sessionUser = req.session.user;
-
-            const comment = CommentModel.find(id);
-
-            if (!comment.can(sessionUser)) {
-                res.status(HttpStatus.FORBIDDEN);
-                res.json({
-                    msg: "FORBIDDEN",
-                    comment: comment
-                })
-                return;
-            }
-
-            comment.delete();
-
-            res.json({
-                msg: "ok",
-            })
-        }
-    };
+  };
 }

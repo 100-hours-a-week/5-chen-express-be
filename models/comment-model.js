@@ -1,118 +1,140 @@
 const {findIndex, parseIntOrNull} = require("./utils");
+const {query} = require("./mysql-model");
 
 module.exports = class {
-    id = null;
-    content = null;
+  id = null;
+  content = null;
 
-    post = {
-        id: null,
+  post = {
+    id: null,
+  }
+  author = {
+    id: null,
+    nickname: "ERROR",
+    profile_image: "ERROR",
+  }
+  created_at = null;
+
+  constructor(id, content, post, author, created_at) {
+    this.id = parseIntOrNull(id);
+    this.content = content;
+
+    this.post.id = parseIntOrNull(post.id);
+
+    this.author.id = author ? parseIntOrNull(author.id) : null;
+    this.author.nickname = author ? author.nickname : "ERROR";
+    this.author.profile_image = author ? author.profile_image : "ERROR";
+
+    this.created_at = created_at;
+  }
+
+  static _loadJSON() {
+    return jsonParse("comments.json")
+  }
+
+  static create(content, post_id, author) {
+    return new this(
+      null, content,
+      {id: post_id},
+      {id: author.id, nickname: author.nickname, profile_image: author.profile_image},
+      new Date().toISOString()
+    )
+  }
+
+  static async all() {
+    return query(`SELECT c.id,
+                         c.post_id,
+                         c.content,
+                         u.id       as author_id,
+                         u.nickname as nickname,
+                         u.profile_image,
+                         c.created_at
+                  FROM Comment as c
+                           LEFT JOIN User as u ON u.id = c.user_id
+                  ORDER BY c.created_at DESC `)
+      .then(rows => {
+        return rows.map(row => this.of(row.id, row.post_id, row.content, row.author_id, row.nickname, row.profile_image, row.created_at))
+      })
+  }
+
+  static async find(id) {
+    return query(`SELECT c.id,
+                         c.post_id,
+                         c.content,
+                         u.id       as author_id,
+                         u.nickname as nickname,
+                         u.profile_image,
+                         c.created_at
+                  FROM Comment as c
+                           LEFT JOIN User as u ON u.id = c.user_id
+                  WHERE c.id = ?`, id)
+      .then(rows => {
+        const row = rows[0];
+        return this.of(row.id, row.post_id, row.content, row.author_id, row.nickname, row.profile_image, row.created_at)
+      })
+  }
+
+  static findAllByPostId(post_id, user) {
+    return query(`SELECT c.id,
+                         c.post_id,
+                         c.content,
+                         u.id       as author_id,
+                         u.nickname as nickname,
+                         u.profile_image,
+                         c.created_at
+                  FROM Comment as c
+                           LEFT JOIN User as u ON u.id = c.user_id
+                  WHERE c.post_id = ?
+                  ORDER BY c.created_at DESC `, post_id)
+      .then(rows => {
+        return rows.map(row => this.of(row.id, row.post_id, row.content, row.author_id, row.nickname, row.profile_image, row.created_at))
+      }).then(comments => comments.map(comment => {
+        comment.can = comment.can(user);
+        return comment
+      }))
+  }
+
+  save() {
+    if (this.id == null) {
+      query(
+        `INSERT INTO Comment (post_id, user_id, content, created_at)
+         VALUES (?, ?, ?, NOW())`,
+        this.post.id, this.author.id, this.content)
+        .then(rows => {
+          this.id = rows.insertId;
+        });
+    } else {
+      query(
+        `UPDATE Comment
+         SET content    = ?,
+             updated_at = now()
+         WHERE id = ?;`, this.content, this.id)
     }
-    author = {
-        id: null,
-        nickname: "ERROR",
-        profile_image: "ERROR",
+  }
+
+  update(content, user) {
+    this.content = content;
+    this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
+  }
+
+  delete() {
+    query(`DELETE
+           FROM Comment
+           WHERE id = ?`, this.id);
+  }
+
+  can(user) {
+    if (user.is_admin) {
+      return true;
     }
-    created_at = null;
+    return parseInt(user.id) === this.author.id;
+  }
 
-    constructor(id, content, post, author, created_at) {
-        this.id = parseIntOrNull(id);
-        this.content = content;
-
-        this.post.id = parseIntOrNull(post.id);
-
-        this.author.id = author ? parseIntOrNull(author.id) : null;
-        this.author.nickname = author ? author.nickname : "ERROR";
-        this.author.profile_image = author ? author.profile_image : "ERROR";
-
-        this.created_at = created_at;
-    }
-
-    static _loadJSON() {
-        return jsonParse("comments.json")
-    }
-
-    static create(content, post_id, author) {
-        return new this(
-            null, content,
-            {id: post_id},
-            {id: author.id, nickname: author.nickname, profile_image: author.profile_image},
-            new Date().toISOString()
-        )
-    }
-
-    static all() {
-        return this._loadJSON().comments.sort((a, b) => b.id - a.id);
-    }
-
-    static find(id) {
-        const _json_data = this._loadJSON()
-        const idx = findIndex(_json_data.comments, id)
-        const target = _json_data.comments[idx];
-
-        return new this(
-            id, target.content,
-            target.post,
-            target.author,
-            target.created_at
-        );
-    }
-
-    static findAllByPostId(post_id, user) {
-        return this._loadJSON().comments
-            .filter(comment => {
-                return parseInt(comment.post.id) === parseInt(post_id);
-            })
-            .map(comment => {
-                comment.can = comment.author.id === user.id || user.is_admin;
-                return comment;
-            })
-            .sort((a, b) => b.id - a.id);
-    }
-
-    save() {
-        const _json_data = this.constructor._loadJSON()
-        if (this.id == null) {
-            const next_id = parseInt(_json_data.next_id);
-            _json_data.next_id = next_id + 1;
-            _json_data.comments.push(
-                {
-                    id: next_id,
-                    content: this.content,
-
-                    post: this.post,
-                    author: this.author,
-                    created_at: this.created_at,
-                }
-            );
-            this.id = next_id;
-        } else {
-            let idx = findIndex(_json_data.comments, this.id)
-
-            _json_data.comments[idx].content = this.content;
-            _json_data.comments[idx].post = this.post;
-            _json_data.comments[idx].author = this.author;
-        }
-
-        jsonWrite("comments.json", _json_data)
-    }
-
-    update(content, user) {
-        this.content = content;
-        this.author = {id: user.id, nickname: user.nickname, profile_image: user.profile_image}
-    }
-
-    delete() {
-        const _json_data = this.constructor._loadJSON()
-        let idx = findIndex(_json_data.comments, this.id)
-        _json_data.comments.splice(idx, 1)
-
-        jsonWrite("comments.json", _json_data)
-    }
-
-    can(user) {
-        if (user.is_admin) {
-            return true;
-        }
-        return parseInt(user.id) === this.author.id;
-    }
+  static of(id, post_id, content, author_id, nickname, profile_image, created_at) {
+    return new this(id, content, {id: post_id}, {
+      id: author_id,
+      nickname: nickname,
+      profile_image: profile_image
+    }, created_at);
+  }
 }

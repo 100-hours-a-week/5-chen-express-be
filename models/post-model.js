@@ -168,10 +168,11 @@ module.exports = class {
 
 
   delete() {
-    const _json_data = this.constructor._loadJSON()
-    let idx = findIndex(_json_data.posts, this.id)
-    _json_data.posts.splice(idx, 1)
-
-    jsonWrite("posts.json", _json_data)
+    query(`DELETE
+           FROM Comment
+           WHERE post_id = ?`, this.id)
+    query(`DELETE
+           FROM Post
+           WHERE id = ?`, this.id)
   }
 }

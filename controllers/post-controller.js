@@ -13,11 +13,12 @@ module.exports = new class {
       const post_id = req.params.id;
       const sessionUser = req.session.user;
 
-      const comments = CommentModel.findAllByPostId(post_id, sessionUser);
-
-      res.json({
-        comments: comments,
-      });
+      CommentModel.findAllByPostId(post_id, sessionUser)
+        .then(comments => {
+          res.json({
+            comments: comments,
+          });
+        });
     }
   }
 
